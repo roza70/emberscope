@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from 'react'
+import EvidenceExplorer from './EvidenceExplorer'
 import './App.css'
 
 type Investigation = {
@@ -65,36 +66,50 @@ function App() {
 
   return (
     <main className="emberscope-app">
+
+      {/* Navigation */}
       <nav className="navbar">
         <a className="brand" href="/">
           <span className="brand-icon">✦</span>
           Ember<span>Scope</span>
         </a>
-        <span className="nav-label">NASA FIRE SAFETY INTELLIGENCE</span>
+
+        <span className="nav-label">
+          NASA FIRE SAFETY INTELLIGENCE
+        </span>
       </nav>
 
+      {/* Hero Section */}
       <section className="hero-section">
-        <p className="eyebrow">NASA MICROGRAVITY RESEARCH</p>
+        <p className="eyebrow">
+          NASA MICROGRAVITY RESEARCH
+        </p>
+
         <h1>
           Understanding Fire
           <br />
           <span>Beyond Earth.</span>
         </h1>
+
         <p className="hero-description">
           Explore NASA's microgravity combustion experiments and discover
           research insights for safer human space exploration.
         </p>
+
         <div className="hero-status">
           <span className="status-dot"></span>
           Research database connected
         </div>
       </section>
 
+      {/* Investigation Explorer */}
       <section className="dashboard-section">
+
         <div className="section-heading">
           <div>
             <p className="eyebrow">RESEARCH LIBRARY</p>
             <h2>Investigation Explorer</h2>
+
             <p className="section-description">
               Explore NASA Physical Sciences Informatics investigations.
             </p>
@@ -106,6 +121,7 @@ function App() {
           </div>
         </div>
 
+        {/* Search and Category Filter */}
         <div className="toolbar">
           <input
             className="search-input"
@@ -127,40 +143,61 @@ function App() {
           </select>
         </div>
 
+        {/* Loading */}
         {loading && (
-          <p className="message">Loading NASA investigations...</p>
+          <p className="message">
+            Loading NASA investigations...
+          </p>
         )}
 
+        {/* Error */}
         {error && (
           <div className="error-message">
             <strong>Unable to load research data.</strong>
             <p>{error}</p>
+
             <button onClick={() => window.location.reload()}>
               Try again
             </button>
           </div>
         )}
 
+        {/* Investigation Cards */}
         {!loading && !error && (
           <>
             <p className="result-count">
-              Showing {filteredInvestigations.length} of {investigations.length} investigations
+              Showing {filteredInvestigations.length} of{' '}
+              {investigations.length} investigations
             </p>
 
             <div className="investigation-grid">
               {filteredInvestigations.map((item) => (
-                <article className="investigation-card" key={item.psi_id}>
+                <article
+                  className="investigation-card"
+                  key={item.psi_id}
+                >
                   <div className="card-top">
-                    <span className="psi-id">{item.psi_id}</span>
-                    <span className="metadata-label">Metadata catalog</span>
+                    <span className="psi-id">
+                      {item.psi_id}
+                    </span>
+
+                    <span className="metadata-label">
+                      Metadata catalog
+                    </span>
                   </div>
 
                   <h3>{item.short_name}</h3>
-                  <p className="card-name">{item.name}</p>
+
+                  <p className="card-name">
+                    {item.name}
+                  </p>
 
                   <div className="category-list">
                     {item.category.map((category) => (
-                      <span className="category-tag" key={category}>
+                      <span
+                        className="category-tag"
+                        key={category}
+                      >
                         {category}
                       </span>
                     ))}
@@ -168,13 +205,15 @@ function App() {
 
                   {item.materials && (
                     <p className="card-detail">
-                      <strong>Materials:</strong> {item.materials.join(', ')}
+                      <strong>Materials:</strong>{' '}
+                      {item.materials.join(', ')}
                     </p>
                   )}
 
                   {item.instruments && (
                     <p className="card-detail">
-                      <strong>Instruments:</strong> {item.instruments.join(', ')}
+                      <strong>Instruments:</strong>{' '}
+                      {item.instruments.join(', ')}
                     </p>
                   )}
 
@@ -188,7 +227,9 @@ function App() {
                         View DOI ↗
                       </a>
                     ) : (
-                      <span className="no-doi">DOI not added</span>
+                      <span className="no-doi">
+                        DOI not added
+                      </span>
                     )}
                   </div>
                 </article>
@@ -204,10 +245,20 @@ function App() {
         )}
       </section>
 
+      {/* Scientific Evidence Explorer */}
+      <EvidenceExplorer />
+
+      {/* Footer */}
       <footer className="footer">
-        <p>EmberScope — NASA Microgravity Fire Safety Intelligence Platform</p>
-        <span>Research-driven insights for safer space exploration.</span>
+        <p>
+          EmberScope — NASA Microgravity Fire Safety Intelligence Platform
+        </p>
+
+        <span>
+          Research-driven insights for safer space exploration.
+        </span>
       </footer>
+
     </main>
   )
 }

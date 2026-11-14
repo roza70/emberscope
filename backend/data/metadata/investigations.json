@@ -1,0 +1,79 @@
+[
+  {
+    "psi_id": "PSI-25",
+    "name": "Burning and Suppression of Solids II",
+    "short_name": "BASS-II",
+    "research_area": "Combustion Science",
+    "category": "Prevention & Suppression",
+    "platform": "International Space Station",
+    "nasa_center": "NASA Glenn Research Center",
+    "objective": "Investigate solid-fuel ignition, flame growth, spread and extinction in microgravity under controlled oxygen concentration and airflow conditions.",
+    "data_status": "metadata_only",
+    "quantitative_data_available": false,
+    "doi": "10.60555/4qc4-de67",
+    "source": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25"
+  },
+  {
+    "psi_id": "PSI-26",
+    "name": "Burning and Suppression of Solids",
+    "short_name": "BASS",
+    "research_area": "Combustion Science",
+    "category": "Prevention & Suppression",
+    "platform": "International Space Station",
+    "nasa_center": "NASA Glenn Research Center",
+    "objective": "Study the burning and extinction of solid materials in microgravity, including the influence of airflow and inert-gas suppression.",
+    "data_status": "metadata_only",
+    "quantitative_data_available": false,
+    "doi": "10.60555/58h4-dy80",
+    "source": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26"
+  },
+  {
+    "psi_id": "PSI-98",
+    "name": "Spacecraft Fire Experiment I",
+    "short_name": "SAFFIRE-I",
+    "research_area": "Combustion Science",
+    "category": "Prevention",
+    "platform": "Cygnus cargo spacecraft",
+    "nasa_center": "NASA Glenn Research Center",
+    "objective": "Investigate large-scale solid-fuel fire behavior inside a spacecraft environment after the cargo vehicle departed the International Space Station.",
+    "data_status": "metadata_only",
+    "quantitative_data_available": false,
+    "doi": "10.60555/0t15-1z43",
+    "source": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98"
+  },
+  {
+    "psi_id": "PSI-101",
+    "name": "Smoke Aerosol Measurement Experiment-Reflight",
+    "short_name": "SAME-R",
+    "research_area": "Combustion Science",
+    "category": "Detection",
+    "platform": "International Space Station",
+    "nasa_center": "NASA Glenn Research Center",
+    "objective": "Quantify smoke particle sizes in low gravity and investigate their relationship with smoke generation.",
+    "materials": [
+      "Pyrell"
+    ],
+    "instruments": [
+      "DustTrak",
+      "Ionization detector",
+      "M-pass"
+    ],
+    "data_status": "metadata_only",
+    "quantitative_data_available": false,
+    "doi": "10.60555/2np7-jv14",
+    "source": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101"
+  },
+  {
+    "psi_id": "PSI-102",
+    "name": "Smoke and Aerosol Measurement Experiment",
+    "short_name": "SAME",
+    "research_area": "Combustion Science",
+    "category": "Detection",
+    "platform": "International Space Station",
+    "nasa_center": "NASA Glenn Research Center",
+    "objective": "Measure smoke particle-size distributions in microgravity and investigate their relationship with smoke generation.",
+    "data_status": "metadata_only",
+    "quantitative_data_available": false,
+    "source": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102"
+  }
+]

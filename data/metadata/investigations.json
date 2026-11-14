@@ -1,0 +1,43 @@
+﻿[
+  {
+    "psi_id": "PSI-25",
+    "short_name": "BASS-II",
+    "name": "Burning and Suppression of Solids II",
+    "category": ["Prevention", "Suppression"],
+    "doi": "10.60555/4qc4-de67",
+    "metadata_only": true
+  },
+  {
+    "psi_id": "PSI-26",
+    "short_name": "BASS",
+    "name": "Burning and Suppression of Solids",
+    "category": ["Prevention", "Suppression"],
+    "doi": "10.60555/58h4-dy80",
+    "metadata_only": true
+  },
+  {
+    "psi_id": "PSI-98",
+    "short_name": "SAFFIRE-I",
+    "name": "Spacecraft Fire Experiment I",
+    "category": ["Prevention"],
+    "doi": "10.60555/0t15-1z43",
+    "metadata_only": true
+  },
+  {
+    "psi_id": "PSI-101",
+    "short_name": "SAME-R",
+    "name": "Smoke Aerosol Measurement Experiment-Reflight",
+    "category": ["Detection"],
+    "doi": "10.60555/2np7-jv14",
+    "materials": ["Pyrell"],
+    "instruments": ["DustTrak", "Ionization detector", "M-pass"],
+    "metadata_only": true
+  },
+  {
+    "psi_id": "PSI-102",
+    "short_name": "SAME",
+    "name": "Smoke and Aerosol Measurement Experiment",
+    "category": ["Detection"],
+    "metadata_only": true
+  }
+]

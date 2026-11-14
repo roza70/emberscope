@@ -1,0 +1,14 @@
+[
+  {
+    "evidence_id": "EVD-PSI-101-001",
+    "psi_id": "PSI-101",
+    "topic": "Detection",
+    "evidence_type": "investigation_objective",
+    "claim": "The investigation was designed to quantify liquid smoke particle sizes in low gravity and relate droplet size distribution to smoke generation.",
+    "source_title": "NASA Physical Sciences Informatics - SAME-R",
+    "source_doi": "10.60555/2np7-jv14",
+    "data_status": "metadata_only_in_local_project",
+    "quantitative_result": null,
+    "limitations": "This objective is not itself an experimental result. The local project does not yet contain the quantitative measurement data."
+  }
+]

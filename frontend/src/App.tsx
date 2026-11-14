@@ -1,13 +1,16 @@
+
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { useEffect, useState } from 'react'
 import EvidenceExplorer from './EvidenceExplorer'
+import AnalyticsDashboard from './AnalyticsDashboard'
 import './App.css'
 
 type Investigation = {
   psi_id: string
   short_name: string
   name: string
+  project_type?: string
   category: string[]
   doi?: string
   materials?: string[]
@@ -33,7 +36,6 @@ type AskMatch = Evidence & {
   relevance_score: number
 }
 
-
 type CitationValidation = {
   citations_found: boolean
   citations_valid: boolean
@@ -51,9 +53,79 @@ type AskResponse = {
   citation_validation: CitationValidation
 }
 
-const API_URL = 'http://127.0.0.1:8000/api/investigations'
-const EVIDENCE_API_URL = 'http://127.0.0.1:8000/api/evidence'
-const ASK_API_URL = 'http://127.0.0.1:8000/api/ask'
+type ResearchProfile = {
+  background: string
+  objectives: string[]
+  methodology: string[]
+  findings: string[]
+  spaceRelevance: string
+  limitations: string[]
+  sources: {
+    title: string
+    url: string
+  }[]
+}
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'
+
+const API_URL = `${API_BASE_URL}/api/investigations`
+const EVIDENCE_API_URL = `${API_BASE_URL}/api/evidence`
+const ASK_API_URL = `${API_BASE_URL}/api/ask`
+
+// Verified research profile currently available locally.
+const researchProfiles: Record<string, ResearchProfile> = {
+  'PSI-159': {
+    background:
+      'Cool Flames Investigation with Gases (CFI-G) was part of NASA’s Advanced Combustion via Microgravity Experiments (ACME). It investigated cool-flame chemistry using gaseous fuels in microgravity. Cool flames are low-temperature combustion reactions that can be difficult to observe under ordinary conditions.',
+
+    objectives: [
+      'Observe non-premixed, spherical cool flames in microgravity.',
+      'Study cool-flame chemistry using a porous spherical burner.',
+      'Investigate combustion behaviour that can improve scientific understanding of fuel oxidation.',
+      'Collect observations that can support the development of improved combustion models.'
+    ],
+
+    methodology: [
+      'The investigation was conducted aboard the International Space Station.',
+      'The experiment used the Combustion Integrated Rack.',
+      'A porous spherical burner was used to study gaseous-fuel combustion.',
+      'Optical diagnostics and imaging were used to observe faint cool-flame behaviour.',
+      'The research examined gaseous fuels under controlled experimental conditions.'
+    ],
+
+    findings: [
+      'Researchers reported observations of spherical, quasi-steady, burner-supported cool flames.',
+      'The experiment demonstrated that cool-flame behaviour can be investigated in a microgravity environment.',
+      'The observations contributed to the scientific understanding of low-temperature combustion.'
+    ],
+
+    spaceRelevance:
+      'CFI-G primarily investigated fundamental combustion chemistry. Its findings can contribute to broader knowledge of flame behaviour in microgravity, which is relevant to understanding combustion in spacecraft environments. However, this experiment should not be interpreted as a direct test of spacecraft fire detection, suppression, or Moon and Mars habitat fire safety systems.',
+
+    limitations: [
+      'The investigation focused on gaseous-fuel cool flames, not every type of spacecraft fire.',
+      'The findings do not independently validate a spacecraft fire suppression system.',
+      'Microgravity experiments in the ISS environment do not reproduce all lunar or Martian surface conditions.',
+      'The findings should be interpreted within the scope of the original experiment and its published research.'
+    ],
+
+    sources: [
+      {
+        title: 'NASA — Advanced Combustion via Microgravity Experiments',
+        url: 'https://science.nasa.gov/biological-physical/investigations/acme/'
+      },
+      {
+        title: 'NASA — Cool Flames Created During a First for ISS Research',
+        url: 'https://www.nasa.gov/missions/station/'
+      },
+      {
+        title: 'NASA Technical Reports Server',
+        url: 'https://ntrs.nasa.gov/search?q=Cool%20Flames%20Investigation%20with%20Gases'
+      }
+    ]
+  }
+}
 
 function App() {
   const [investigations, setInvestigations] = useState<Investigation[]>([])
@@ -68,7 +140,6 @@ function App() {
   const [selectedInvestigation, setSelectedInvestigation] =
     useState<Investigation | null>(null)
 
-  // Ask EmberScope states
   const [question, setQuestion] = useState('')
   const [askResult, setAskResult] = useState<AskResponse | null>(null)
   const [asking, setAsking] = useState(false)
@@ -84,7 +155,7 @@ function App() {
         const [investigationResponse, evidenceResponse] =
           await Promise.all([
             fetch(API_URL),
-            fetch(EVIDENCE_API_URL),
+            fetch(EVIDENCE_API_URL)
           ])
 
         if (!investigationResponse.ok) {
@@ -134,10 +205,50 @@ function App() {
     return matchesSearch && matchesCategory
   })
 
-  // Evidence belonging to the selected investigation
+  // Evidence linked to the selected investigation
   const relatedEvidence = evidence.filter(
-    (item) => item.psi_id === selectedInvestigation?.psi_id
+    (item) =>
+      item.psi_id?.trim().toUpperCase() ===
+      selectedInvestigation?.psi_id?.trim().toUpperCase()
   )
+
+  // Related investigations based on shared research categories
+  const relatedInvestigations = selectedInvestigation
+    ? investigations
+      .filter(
+        (item) =>
+          item.psi_id.trim().toUpperCase() !==
+          selectedInvestigation.psi_id.trim().toUpperCase()
+      )
+      .map((item) => {
+        const selectedCategories = selectedInvestigation.category.map(
+          (category) => category.trim().toLowerCase()
+        )
+
+        const sharedCategories = item.category.filter((category) =>
+          selectedCategories.includes(category.trim().toLowerCase())
+        )
+
+        return {
+          ...item,
+          sharedCategories,
+          matchCount: sharedCategories.length
+        }
+      })
+      .filter((item) => item.matchCount > 0)
+      .sort((a, b) => {
+        if (b.matchCount !== a.matchCount) {
+          return b.matchCount - a.matchCount
+        }
+
+        return a.short_name.localeCompare(b.short_name)
+      })
+    : []
+
+  // Selected investigation research profile
+  const selectedProfile = selectedInvestigation
+    ? researchProfiles[selectedInvestigation.psi_id]
+    : undefined
 
   // Ask EmberScope Research Assistant
   async function askAssistant() {
@@ -154,12 +265,12 @@ function App() {
       const response = await fetch(ASK_API_URL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           question: question.trim(),
-          top_k: 5,
-        }),
+          top_k: 5
+        })
       })
 
       if (!response.ok) {
@@ -168,7 +279,6 @@ function App() {
 
       const data: AskResponse = await response.json()
       setAskResult(data)
-
     } catch (err) {
       setAskError(
         err instanceof Error
@@ -180,15 +290,22 @@ function App() {
     }
   }
 
-  // Example questions
   const exampleQuestions = [
     'How does smoke behave in microgravity?',
     'What NASA experiments studied fire suppression?',
-    'Which investigations focus on fire detection?',
+    'Which investigations focus on fire detection?'
   ]
 
+  function openInvestigation(item: Investigation) {
+    setSelectedInvestigation(item)
+  }
+
+  function closeInvestigation() {
+    setSelectedInvestigation(null)
+  }
+
   return (
-    <main className="emberscope-app">
+    <main className="emberscope-app" id="home">
 
       {/* Navigation */}
       <nav className="navbar">
@@ -201,573 +318,705 @@ function App() {
           Ember<span>Scope</span>
         </a>
 
+        <div className="nav-links">
+          <a href="#home" onClick={() => setSelectedInvestigation(null)}>
+            Home
+          </a>
+          <a href="#analytics" onClick={() => setSelectedInvestigation(null)}>
+            Analytics
+          </a>
+          <a href="#investigations" onClick={() => setSelectedInvestigation(null)}>
+            Investigations
+          </a>
+          <a href="#evidence" onClick={() => setSelectedInvestigation(null)}>
+            Evidence
+          </a>
+          <a href="#ask" onClick={() => setSelectedInvestigation(null)}>
+            Ask SI
+          </a>
+        </div>
+
         <span className="nav-label">
           NASA FIRE SAFETY INTELLIGENCE
         </span>
       </nav>
 
       {/* Hero Section */}
-      <section className="hero-section" id="home">
-        <p className="eyebrow">
-          NASA MICROGRAVITY RESEARCH
-        </p>
+      <section className="hero-section">
+        <div className="hero-content">
+          <span className="hero-eyebrow">
+            NASA MICROGRAVITY RESEARCH
+          </span>
 
-        <h1>
-          Understanding <span className="fire-gradient">Fire</span>
-          <br />
-          <span>Beyond Earth.</span>
-        </h1>
-        <p className="hero-description">
-          Explore NASA's microgravity combustion experiments and discover
-          research insights for safer human space exploration.
-        </p>
+          <h1>
+            Understanding Fire
+            <br />
+            <span>Beyond Earth.</span>
+          </h1>
 
-        <div className="hero-status">
-          <span className="status-dot"></span>
-          Research database connected
+          <p>
+            Explore NASA's microgravity combustion experiments
+            and discover research insights for safer human
+            space exploration.
+          </p>
+
+          <div className="hero-status">
+            <span className="status-dot"></span>
+            Research database connected
+          </div>
         </div>
       </section>
 
-      {/* Ask EmberScope Research Assistant */}
-      <section className="dashboard-section ask-section" id="ask">
+      {/* Main Dashboard */}
+      <div className="dashboard-container">
 
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">SI RESEARCH ASSISTANT</p>
+        {/* Ask EmberScope */}
+        <section className="ask-section" id="ask">
+          <div className="section-heading">
+            <span className="section-eyebrow">
+              SI RESEARCH ASSISTANT
+            </span>
+
             <h2>Ask EmberScope</h2>
 
-            <p className="section-description">
-              Explore NASA fire safety research through evidence-based
-              information retrieval.
+            <p>
+              Explore NASA fire safety research through
+              evidence-based information retrieval.
             </p>
           </div>
 
-          <div className="total-card">
-            <strong>SI</strong>
-            <span>Assistant</span>
-          </div>
-        </div>
+          <div className="ask-panel">
+            <label htmlFor="research-question">
+              What would you like to explore?
+            </label>
 
-        <div className="ask-panel">
+            <textarea
+              id="research-question"
+              className="ask-input"
+              value={question}
+              onChange={(event) => setQuestion(event.target.value)}
+              placeholder="Ask a question about NASA microgravity fire experiments..."
+              rows={4}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                  event.preventDefault()
+                  if (!asking) askAssistant()
+                }
+              }}
+            />
 
-          <label htmlFor="research-question">
-            What would you like to research?
-          </label>
+            <div className="ask-controls">
+              <span className="ask-hint">
+                Press Enter to ask · Shift + Enter for a new line
+              </span>
 
-          <textarea
-            id="research-question"
-            className="ask-input"
-            placeholder="Example: How does smoke behave in microgravity?"
-            value={question}
-            onChange={(event) => setQuestion(event.target.value)}
-            onKeyDown={(event) => {
-              if (
-                event.key === 'Enter' &&
-                !event.shiftKey &&
-                !asking
-              ) {
-                event.preventDefault()
-                askAssistant()
-              }
-            }}
-            rows={3}
-          />
+              <button
+                className="ask-button"
+                onClick={askAssistant}
+                disabled={asking}
+              >
+                {asking
+                  ? 'Researching...'
+                  : 'Ask Research Assistant →'}
+              </button>
+            </div>
 
-          <div className="ask-controls">
-            <span className="ask-hint">
-              Press Enter to ask · Shift + Enter for a new line
-            </span>
+            {askError && (
+              <div className="error-message">
+                {askError}
+              </div>
+            )}
 
-            <button
-              className="ask-button"
-              onClick={askAssistant}
-              disabled={asking}
-            >
-              {asking ? 'Researching...' : 'Ask EmberScope →'}
-            </button>
-          </div>
+            <div className="example-questions">
+              <span>Explore with example questions</span>
 
-          {/* Example questions */}
-          <div className="example-questions">
-            <p>Try asking:</p>
-
-            <div className="example-list">
-              {exampleQuestions.map((example) => (
-                <button
-                  key={example}
-                  className="example-question"
-                  onClick={() => {
-                    setQuestion(example)
-                    setAskError('')
-                  }}
-                >
-                  {example}
-                </button>
-              ))}
+              <div className="example-list">
+                {exampleQuestions.map((example, index) => (
+                  <button
+                    key={index}
+                    className="example-question"
+                    onClick={() => {
+                      setQuestion(example)
+                      setAskError('')
+                    }}
+                  >
+                    {example}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
-        </div>
-
-        {/* Loading state */}
-        {asking && (
-          <div className="assistant-loading">
-            <span className="status-dot"></span>
-            Searching NASA research evidence...
-          </div>
-        )}
-
-        {/* Error state */}
-        {askError && (
-          <div className="error-message">
-            <strong>Research request unsuccessful.</strong>
-            <p>{askError}</p>
-          </div>
-        )}
-
-        {/* Assistant response */}
-        {askResult && !asking && (
-          <div className="assistant-results">
-
+          {/* Assistant Answer */}
+          {askResult && (
             <div className="assistant-answer">
-              <p className="eyebrow">EMBERSCOPE RESEARCH RESPONSE</p>
+              <div className="answer-header">
+                <div>
+                  <span className="section-eyebrow">
+                    EMBERSCOPE AI
+                  </span>
+                  <h3>Research Response</h3>
+                </div>
 
-              <h3>{askResult.question}</h3>
+                <span className="ai-provider">
+                  {askResult.ai_provider}
+                </span>
+              </div>
 
-              <div className="markdown-answer">
+              <div className="answer-content">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {askResult.answer}
                 </ReactMarkdown>
               </div>
 
-              <div className="total-card">
-                <strong>{askResult.total_matches}</strong>
-                <span>Evidence matches</span>
+              <div className="answer-metadata">
+                <span>
+                  Evidence matches: {askResult.total_matches}
+                </span>
+
+                <span>
+                  Answer type: {askResult.answer_type}
+                </span>
+
+                <span>
+                  Citations:{' '}
+                  {askResult.citation_validation.citations_valid
+                    ? 'Validated IDs'
+                    : 'Not fully validated'}
+                </span>
               </div>
-            </div>
 
-            {/* Matching evidence */}
-            <div className="assistant-evidence">
+              {askResult.matches.length > 0 && (
+                <div className="answer-sources">
+                  <h4>Retrieved Research Evidence</h4>
 
-              <div className="section-heading">
-                <div>
-                  <p className="eyebrow">RETRIEVED NASA RECORDS</p>
-                  <h3>Relevant Research Evidence</h3>
-                </div>
-              </div>
-
-              {askResult.matches.length > 0 ? (
-                <div className="evidence-grid">
-
-                  {askResult.matches.map((item) => (
-                    <article
-                      className="evidence-card"
-                      key={item.evidence_id}
+                  {askResult.matches.map((match) => (
+                    <div
+                      className="answer-source-card"
+                      key={match.evidence_id}
                     >
+                      <strong>
+                        {match.evidence_id} · {match.source_title}
+                      </strong>
 
-                      <div className="card-top">
-                        <span className="psi-id">
-                          {item.psi_id}
-                        </span>
+                      <p>{match.claim}</p>
 
-                        <span className="metadata-label">
-                          {item.topic}
-                        </span>
-                      </div>
+                      <span>
+                        Investigation: {match.psi_id}
+                      </span>
 
-                      <h3>{item.source_title}</h3>
-
-                      <p>{item.claim}</p>
-
-                      <p className="card-detail">
-                        <strong>Evidence type:</strong>{' '}
-                        {item.evidence_type.replaceAll('_', ' ')}
-                      </p>
-
-                      <p className="card-detail">
-                        <strong>Relevance score:</strong>{' '}
-                        {item.relevance_score}
-                      </p>
-
-                      <p className="card-detail">
-                        <strong>Data status:</strong>{' '}
-                        {item.data_status.replaceAll('_', ' ')}
-                      </p>
-
-                      {item.quantitative_result !== null && (
-                        <p className="card-detail">
-                          <strong>Quantitative result:</strong>{' '}
-                          {item.quantitative_result}
-                        </p>
-                      )}
-
-                      <p className="card-detail">
-                        <strong>Limitations:</strong>{' '}
-                        {item.limitations}
-                      </p>
-
-                      {item.source_doi && (
-                        <p className="card-detail">
-                          <strong>DOI:</strong>{' '}
-                          {item.source_doi}
-                        </p>
-                      )}
-
-                      {item.source_url && (
+                      {match.source_url && (
                         <a
-                          href={item.source_url}
+                          href={match.source_url}
                           target="_blank"
                           rel="noreferrer"
                         >
-                          Open NASA research source ↗
+                          View Source ↗
                         </a>
                       )}
-
-                    </article>
+                    </div>
                   ))}
-
                 </div>
-              ) : (
-                <p className="message">
-                  No matching evidence was found in the local database.
-                </p>
               )}
-
             </div>
+          )}
+        </section>
 
-            <p className="assistant-disclaimer">
-              Research note: Retrieved records may describe investigation
-              objectives rather than verified experimental findings.
-              Always review the original NASA source and listed limitations.
-            </p>
-
+        {/* Loading and Error */}
+        {loading && (
+          <div className="loading-state">
+            Loading NASA research database...
           </div>
         )}
 
-      </section>
-
-      {/* Investigation Detail View */}
-      {selectedInvestigation ? (
-        <section className="dashboard-section detail-section">
-
-          <button
-            className="back-button"
-            onClick={() => setSelectedInvestigation(null)}
-          >
-            ← Back to Investigations
-          </button>
-
-          <p className="eyebrow">
-            INVESTIGATION DETAILS · {selectedInvestigation.psi_id}
-          </p>
-
-          <h2>{selectedInvestigation.short_name}</h2>
-
-          <h3>{selectedInvestigation.name}</h3>
-
-          <div className="category-list">
-            {selectedInvestigation.category.map((category) => (
-              <span className="category-tag" key={category}>
-                {category}
-              </span>
-            ))}
+        {error && (
+          <div className="error-message">
+            {error}
           </div>
+        )}
 
-          {/* Investigation Information */}
-          <div className="detail-card">
-            <h3>Research Information</h3>
-
-            <p>
-              <strong>Investigation ID:</strong>{' '}
-              {selectedInvestigation.psi_id}
-            </p>
-
-            <p>
-              <strong>Short Name:</strong>{' '}
-              {selectedInvestigation.short_name}
-            </p>
-
-            <p>
-              <strong>Data Availability:</strong>{' '}
-              {selectedInvestigation.metadata_only
-                ? 'Metadata catalog only'
-                : 'Additional data available in project'}
-            </p>
-
-            {selectedInvestigation.materials && (
-              <p>
-                <strong>Materials:</strong>{' '}
-                {selectedInvestigation.materials.join(', ')}
-              </p>
-            )}
-
-            {selectedInvestigation.instruments && (
-              <p>
-                <strong>Instruments:</strong>{' '}
-                {selectedInvestigation.instruments.join(', ')}
-              </p>
-            )}
-
-            {selectedInvestigation.doi && (
-              <p>
-                <strong>NASA Research Source:</strong>{' '}
-                <a
-                  href={`https://doi.org/${selectedInvestigation.doi}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  View DOI ↗
-                </a>
-              </p>
-            )}
-          </div>
-
-          {/* Related Evidence */}
-          <div className="detail-evidence">
-            <div className="section-heading">
-              <div>
-                <p className="eyebrow">RESEARCH RECORDS</p>
-                <h3>Related Evidence</h3>
-              </div>
-
-              <div className="total-card">
-                <strong>{relatedEvidence.length}</strong>
-                <span>Records</span>
-              </div>
-            </div>
-
-            {relatedEvidence.length > 0 ? (
-              <div className="evidence-grid">
-                {relatedEvidence.map((item) => (
-                  <article
-                    className="evidence-card"
-                    key={item.evidence_id}
-                  >
-                    <div className="card-top">
-                      <span className="psi-id">
-                        {item.topic}
-                      </span>
-
-                      <span className="metadata-label">
-                        {item.evidence_type.replaceAll('_', ' ')}
-                      </span>
-                    </div>
-
-                    <p>{item.claim}</p>
-
-                    <p className="card-detail">
-                      <strong>Source:</strong>{' '}
-                      {item.source_title}
-                    </p>
-
-                    <p className="card-detail">
-                      <strong>Data status:</strong>{' '}
-                      {item.data_status.replaceAll('_', ' ')}
-                    </p>
-
-                    {item.quantitative_result !== null && (
-                      <p className="card-detail">
-                        <strong>Quantitative result:</strong>{' '}
-                        {item.quantitative_result}
-                      </p>
-                    )}
-
-                    <p className="card-detail">
-                      <strong>Limitations:</strong>{' '}
-                      {item.limitations}
-                    </p>
-
-                    {item.source_url && (
-                      <a
-                        href={item.source_url}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Open research source ↗
-                      </a>
-                    )}
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <p className="message">
-                No related evidence records are currently available.
-              </p>
-            )}
-          </div>
-
-        </section>
-      ) : (
-
-        /* Main Investigation Explorer */
-        <section className="dashboard-section">
-
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">RESEARCH LIBRARY</p>
-              <h2>Investigation Explorer</h2>
-
-              <p className="section-description">
-                Explore NASA Physical Sciences Informatics investigations.
-              </p>
-            </div>
-
-            <div className="total-card">
-              <strong>{investigations.length}</strong>
-              <span>Investigations</span>
-            </div>
-          </div>
-
-          {/* Search and Category Filter */}
-          <div className="toolbar">
-            <input
-              className="search-input"
-              type="search"
-              placeholder="Search by name, ID or experiment..."
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
+        {/* Analytics Dashboard */}
+        {!loading && !error && (
+          <section id="analytics">
+            <AnalyticsDashboard
+              investigations={investigations}
+              evidence={evidence}
             />
+          </section>
+        )}
 
-            <select
-              className="category-select"
-              value={selectedCategory}
-              onChange={(event) => setSelectedCategory(event.target.value)}
-            >
-              <option value="All">All categories</option>
-              <option value="Prevention">Prevention</option>
-              <option value="Detection">Detection</option>
-              <option value="Suppression">Suppression</option>
-            </select>
-          </div>
+        {/* Investigation Explorer */}
+        {!loading && !error && (
+          <section
+            className="dashboard-section"
+            id="investigations"
+          >
+            {!selectedInvestigation ? (
+              <>
+                <div className="section-heading">
+                  <span className="section-eyebrow">
+                    NASA RESEARCH DATABASE
+                  </span>
 
-          {/* Loading */}
-          {loading && (
-            <p className="message">
-              Loading NASA investigations...
-            </p>
-          )}
+                  <h2>Investigation Explorer</h2>
 
-          {/* Error */}
-          {error && (
-            <div className="error-message">
-              <strong>Unable to load research data.</strong>
-              <p>{error}</p>
+                  <p>
+                    Explore curated NASA combustion investigations
+                    and their fire safety research objectives.
+                  </p>
+                </div>
 
-              <button onClick={() => window.location.reload()}>
-                Try again
-              </button>
-            </div>
-          )}
+                {/* Search and Category Filter */}
+                <div className="filter-panel">
+                  <input
+                    type="text"
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
+                    placeholder="Search investigations by name or PSI ID..."
+                    className="search-input"
+                  />
 
-          {/* Investigation Cards */}
-          {!loading && !error && (
-            <>
-              <p className="result-count">
-                Showing {filteredInvestigations.length} of{' '}
-                {investigations.length} investigations
-              </p>
-
-              <div className="investigation-grid">
-                {filteredInvestigations.map((item) => (
-                  <article
-                    className="investigation-card"
-                    key={item.psi_id}
+                  <select
+                    value={selectedCategory}
+                    onChange={(event) =>
+                      setSelectedCategory(event.target.value)
+                    }
+                    className="category-select"
                   >
-                    <div className="card-top">
-                      <span className="psi-id">
+                    <option value="All">All Categories</option>
+                    <option value="Prevention">Prevention</option>
+                    <option value="Detection">Detection</option>
+                    <option value="Suppression">Suppression</option>
+                  </select>
+                </div>
+
+                <div className="results-count">
+                  Showing {filteredInvestigations.length} of{' '}
+                  {investigations.length} curated investigations
+                </div>
+
+                <div className="investigation-grid">
+                  {filteredInvestigations.map((item) => (
+                    <article
+                      className="investigation-card"
+                      key={item.psi_id}
+                    >
+                      <span className="investigation-id">
                         {item.psi_id}
                       </span>
 
-                      <span className="metadata-label">
-                        Metadata catalog
-                      </span>
-                    </div>
+                      <h3>{item.short_name}</h3>
 
-                    <h3>{item.short_name}</h3>
+                      <p>{item.name}</p>
 
-                    <p className="card-name">
-                      {item.name}
-                    </p>
+                      {item.project_type && (
+                        <span className="project-type">
+                          {item.project_type}
+                        </span>
+                      )}
 
-                    <div className="category-list">
-                      {item.category.map((category) => (
+                      <div className="category-tags">
+                        {item.category.map((category) => (
+                          <span
+                            className={`category-tag ${category.toLowerCase()}`}
+                            key={category}
+                          >
+                            {category}
+                          </span>
+                        ))}
+                      </div>
+
+                      <button
+                        className="explore-button"
+                        onClick={() => openInvestigation(item)}
+                      >
+                        Explore Investigation →
+                      </button>
+                    </article>
+                  ))}
+                </div>
+
+                {filteredInvestigations.length === 0 && (
+                  <div className="empty-state">
+                    No matching investigations found.
+                  </div>
+                )}
+              </>
+            ) : (
+              /* Complete Investigation Detail Page */
+              <div className="detail-view">
+
+                <button
+                  className="back-button"
+                  onClick={closeInvestigation}
+                >
+                  ← Back to Investigations
+                </button>
+
+                {/* Investigation Header */}
+                <div className="detail-card">
+                  <span className="section-eyebrow">
+                    NASA INVESTIGATION PROFILE
+                  </span>
+
+                  <span className="investigation-id">
+                    {selectedInvestigation.psi_id}
+                  </span>
+
+                  <h2>{selectedInvestigation.short_name}</h2>
+
+                  <h3>{selectedInvestigation.name}</h3>
+
+                  <div className="detail-meta">
+                    {selectedInvestigation.project_type && (
+                      <p>
+                        <strong>Project Type:</strong>{' '}
+                        {selectedInvestigation.project_type}
+                      </p>
+                    )}
+
+                    <div className="category-tags">
+                      {selectedInvestigation.category.map((category) => (
                         <span
-                          className="category-tag"
+                          className={`category-tag ${category.toLowerCase()}`}
                           key={category}
                         >
                           {category}
                         </span>
                       ))}
                     </div>
+                  </div>
 
-                    {item.materials && (
-                      <p className="card-detail">
-                        <strong>Materials:</strong>{' '}
-                        {item.materials.join(', ')}
-                      </p>
+                  {selectedInvestigation.doi && (
+                    <p className="detail-doi">
+                      <strong>DOI:</strong>{' '}
+                      <a
+                        href={`https://doi.org/${selectedInvestigation.doi}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {selectedInvestigation.doi} ↗
+                      </a>
+                    </p>
+                  )}
+
+                  {selectedInvestigation.materials &&
+                    selectedInvestigation.materials.length > 0 && (
+                      <div className="detail-info-block">
+                        <h4>Materials</h4>
+                        <ul>
+                          {selectedInvestigation.materials.map((material) => (
+                            <li key={material}>{material}</li>
+                          ))}
+                        </ul>
+                      </div>
                     )}
 
-                    {item.instruments && (
-                      <p className="card-detail">
-                        <strong>Instruments:</strong>{' '}
-                        {item.instruments.join(', ')}
-                      </p>
+                  {selectedInvestigation.instruments &&
+                    selectedInvestigation.instruments.length > 0 && (
+                      <div className="detail-info-block">
+                        <h4>Instruments</h4>
+                        <ul>
+                          {selectedInvestigation.instruments.map((instrument) => (
+                            <li key={instrument}>{instrument}</li>
+                          ))}
+                        </ul>
+                      </div>
                     )}
+                </div>
 
-                    <div className="card-footer">
-                      {item.doi ? (
-                        <a
-                          href={`https://doi.org/${item.doi}`}
-                          target="_blank"
-                          rel="noreferrer"
+                {/* Research Profile */}
+                {selectedProfile ? (
+                  <div className="research-profile">
+
+                    <section className="research-block">
+                      <span className="section-eyebrow">
+                        RESEARCH OVERVIEW
+                      </span>
+                      <h3>Scientific Background</h3>
+                      <p>{selectedProfile.background}</p>
+                    </section>
+
+                    <section className="research-block">
+                      <span className="section-eyebrow">
+                        RESEARCH GOALS
+                      </span>
+                      <h3>Research Objectives</h3>
+                      <ul>
+                        {selectedProfile.objectives.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
+                    </section>
+
+                    <section className="research-block">
+                      <span className="section-eyebrow">
+                        EXPERIMENTAL PROCESS
+                      </span>
+                      <h3>Experimental Methodology</h3>
+                      <ul>
+                        {selectedProfile.methodology.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
+                    </section>
+
+                    <section className="research-block">
+                      <span className="section-eyebrow">
+                        REPORTED OBSERVATIONS
+                      </span>
+                      <h3>Scientific Findings</h3>
+                      <ul>
+                        {selectedProfile.findings.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
+                      <p className="research-note">
+                        Findings are presented as a summary of the
+                        available research profile, not as a complete
+                        reproduction of the original NASA publication.
+                      </p>
+                    </section>
+
+                    <section className="research-block">
+                      <span className="section-eyebrow">
+                        SPACE EXPLORATION
+                      </span>
+                      <h3>Moon & Mars Relevance</h3>
+                      <p>{selectedProfile.spaceRelevance}</p>
+                    </section>
+
+                    <section className="research-block">
+                      <span className="section-eyebrow">
+                        SCIENTIFIC CAUTION
+                      </span>
+                      <h3>Research Limitations</h3>
+                      <ul>
+                        {selectedProfile.limitations.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
+                    </section>
+
+                    <section className="research-block">
+                      <span className="section-eyebrow">
+                        SOURCE VERIFICATION
+                      </span>
+                      <h3>NASA Research Sources</h3>
+
+                      <div className="research-source-list">
+                        {selectedProfile.sources.map((source, index) => (
+                          <a
+                            key={index}
+                            href={source.url}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {source.title} ↗
+                          </a>
+                        ))}
+                      </div>
+                    </section>
+
+                  </div>
+                ) : (
+                  <div className="research-profile-pending">
+                    <span className="section-eyebrow">
+                      RESEARCH PROFILE
+                    </span>
+
+                    <h3>Detailed Research Profile Coming Soon</h3>
+
+                    <p>
+                      The investigation metadata is available in the
+                      local database, but a complete, source-verified
+                      scientific profile has not yet been added.
+                    </p>
+
+                    <p>
+                      We do not generate unverified research findings.
+                      This profile will be expanded when the original
+                      NASA publications and datasets are reviewed.
+                    </p>
+                  </div>
+                )}
+
+                {/* Related Investigations */}
+                <div className="related-evidence">
+                  <span className="section-eyebrow">
+                    EXPLORE CONNECTED RESEARCH
+                  </span>
+
+                  <h3>Related Investigations</h3>
+
+                  <p>
+                    These investigations share one or more research
+                    categories with the current investigation.
+                    This is category-based matching, not a verified
+                    scientific relationship.
+                  </p>
+
+                  {relatedInvestigations.length > 0 ? (
+                    <div className="investigation-grid">
+                      {relatedInvestigations.map((item) => (
+                        <article
+                          className="investigation-card"
+                          key={item.psi_id}
                         >
-                          View DOI ↗
-                        </a>
-                      ) : (
-                        <span className="no-doi">
-                          DOI not added
-                        </span>
-                      )}
+                          <span className="investigation-id">
+                            {item.psi_id}
+                          </span>
+
+                          <h3>{item.short_name}</h3>
+
+                          <p>{item.name}</p>
+
+                          <div className="category-tags">
+                            {item.category.map((category) => (
+                              <span
+                                className={`category-tag ${category.toLowerCase()}`}
+                                key={category}
+                              >
+                                {category}
+                              </span>
+                            ))}
+                          </div>
+
+                          <span className="project-type">
+                            {item.matchCount} shared{' '}
+                            {item.matchCount === 1 ? 'category' : 'categories'}
+                          </span>
+
+                          <button
+                            className="explore-button"
+                            onClick={() => openInvestigation(item)}
+                          >
+                            Explore Investigation →
+                          </button>
+                        </article>
+                      ))}
                     </div>
+                  ) : (
+                    <p className="no-evidence-message">
+                      No other investigation currently shares a research
+                      category with this investigation in the local database.
+                    </p>
+                  )}
+                </div>
 
-                    <button
-                      className="explore-button"
-                      onClick={() => {
-                        setSelectedInvestigation(item)
-                      }}
-                    >
-                      Explore Investigation →
-                    </button>
+                {/* Related Research Evidence */}
+                <div className="related-evidence">
+                  <span className="section-eyebrow">
+                    LOCAL EVIDENCE DATABASE
+                  </span>
 
-                  </article>
-                ))}
+                  <h3>Related Research Evidence</h3>
+
+                  {relatedEvidence.length > 0 ? (
+                    relatedEvidence.map((item) => (
+                      <article
+                        className="evidence-card"
+                        key={item.evidence_id}
+                      >
+                        <span className="investigation-id">
+                          {item.evidence_id}
+                        </span>
+
+                        <h4>{item.topic}</h4>
+
+                        <p>{item.claim}</p>
+
+                        <p>
+                          <strong>Evidence Type:</strong>{' '}
+                          {item.evidence_type}
+                        </p>
+
+                        <p>
+                          <strong>Data Status:</strong>{' '}
+                          {item.data_status}
+                        </p>
+
+                        {item.quantitative_result !== null && (
+                          <p>
+                            <strong>Quantitative Result:</strong>{' '}
+                            {item.quantitative_result}
+                          </p>
+                        )}
+
+                        <p>
+                          <strong>Limitations:</strong>{' '}
+                          {item.limitations}
+                        </p>
+
+                        {item.source_url && (
+                          <a
+                            href={item.source_url}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            View Research Source ↗
+                          </a>
+                        )}
+
+                        {item.source_doi && (
+                          <p>
+                            <strong>Source DOI:</strong>{' '}
+                            <a
+                              href={`https://doi.org/${item.source_doi}`}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {item.source_doi} ↗
+                            </a>
+                          </p>
+                        )}
+                      </article>
+                    ))
+                  ) : (
+                    <p className="no-evidence-message">
+                      No linked evidence is currently available in the
+                      local database for this investigation. This does
+                      not mean NASA has no published research or data
+                      about it.
+                    </p>
+                  )}
+                </div>
+
               </div>
+            )}
+          </section>
+        )}
 
-              {filteredInvestigations.length === 0 && (
-                <p className="message">
-                  No investigations match your search.
-                </p>
-              )}
-            </>
-          )}
+        {/* Evidence Explorer */}
+        {!loading && !error && (
+          <section id="evidence">
+            <EvidenceExplorer evidence={evidence} />
+          </section>
+        )}
 
-        </section>
-      )}
-
-      {/* Scientific Evidence Explorer */}
-      {!selectedInvestigation && <EvidenceExplorer />}
+      </div>
 
       {/* Footer */}
       <footer className="footer">
+        <div className="footer-brand">
+          <span className="brand-icon">✦</span>
+          EmberScope
+        </div>
+
         <p>
-          EmberScope — NASA Microgravity Fire Safety Intelligence Platform
+          NASA Microgravity Fire Safety Intelligence Platform
         </p>
 
         <span>
-          Research-driven insights for safer space exploration.
+          An independent research exploration project for NASA
+          Space Apps Challenge 2026.
         </span>
-      </footer>
 
+        <small>
+          Research data and interpretations should be understood
+          within their documented evidence and limitations.
+        </small>
+      </footer>
     </main>
   )
 }

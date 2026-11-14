@@ -1,14 +1,67 @@
 [
   {
+    "evidence_id": "EVD-PSI-25-001",
+    "psi_id": "PSI-25",
+    "topic": "Prevention",
+    "evidence_type": "investigation_objective",
+    "claim": "BASS-II investigates ignition, flame growth, flame spread and extinction limits for solid fuels burning in low-velocity forced flows under microgravity.",
+    "source_title": "NASA PSI - BASS-II",
+    "source_doi": "10.60555/4qc4-de67",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+    "data_status": "NASA_data_not_yet_ingested_locally",
+    "quantitative_result": null,
+    "limitations": "This record describes investigation objectives, not a specific measured result. The quantitative NASA dataset has not yet been processed in EmberScope."
+  },
+  {
+    "evidence_id": "EVD-PSI-26-001",
+    "psi_id": "PSI-26",
+    "topic": "Suppression",
+    "evidence_type": "investigation_objective",
+    "claim": "The BASS investigation studied the behavior of burning fuels in microgravity, including approaches to extinguishing flames and the effectiveness of nitrogen for fire suppression.",
+    "source_title": "NASA - Studying Combustion and Fire Safety",
+    "source_doi": null,
+    "source_url": "https://www.nasa.gov/missions/station/iss-research/studying-combustion-and-fire-safety/",
+    "data_status": "NASA_data_not_yet_ingested_locally",
+    "quantitative_result": null,
+    "limitations": "This is a high-level description of the investigation. It does not establish a universal suppression effectiveness or a measured nitrogen performance value."
+  },
+  {
+    "evidence_id": "EVD-PSI-98-001",
+    "psi_id": "PSI-98",
+    "topic": "Prevention",
+    "evidence_type": "investigation_objective",
+    "claim": "SAFFIRE-I investigated large-scale fire growth in low gravity and low-gravity flammability limits compared with normal-gravity material flammability screening.",
+    "source_title": "NASA PSI - SAFFIRE-I",
+    "source_doi": "10.60555/0t15-1z43",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98",
+    "data_status": "NASA_data_not_yet_ingested_locally",
+    "quantitative_result": null,
+    "limitations": "This record summarizes investigation objectives. It does not provide a measured flame spread rate or a quantitative fire risk score."
+  },
+  {
     "evidence_id": "EVD-PSI-101-001",
     "psi_id": "PSI-101",
     "topic": "Detection",
     "evidence_type": "investigation_objective",
-    "claim": "The investigation was designed to quantify liquid smoke particle sizes in low gravity and relate droplet size distribution to smoke generation.",
-    "source_title": "NASA Physical Sciences Informatics - SAME-R",
+    "claim": "SAME-R was designed to quantify liquid smoke particle sizes in low gravity and relate droplet size distribution to smoke generation and transport conditions.",
+    "source_title": "NASA PSI - SAME-R",
     "source_doi": "10.60555/2np7-jv14",
-    "data_status": "metadata_only_in_local_project",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+    "data_status": "NASA_data_not_yet_ingested_locally",
     "quantitative_result": null,
-    "limitations": "This objective is not itself an experimental result. The local project does not yet contain the quantitative measurement data."
+    "limitations": "This objective is not itself an experimental result. The quantitative measurement data has not yet been processed in EmberScope."
+  },
+  {
+    "evidence_id": "EVD-PSI-102-001",
+    "psi_id": "PSI-102",
+    "topic": "Detection",
+    "evidence_type": "investigation_objective",
+    "claim": "SAME investigated smoke particle size distributions from typical spacecraft materials to support smoke detection requirements for future spacecraft.",
+    "source_title": "NASA - Smoke and Aerosol Measurement Experiment",
+    "source_doi": null,
+    "source_url": "https://www.nasa.gov/wp-content/uploads/2022/03/iss_technical_publication_030116.pdf",
+    "data_status": "NASA_data_not_yet_ingested_locally",
+    "quantitative_result": null,
+    "limitations": "This record summarizes the investigation objective. Quantitative findings from the NASA report have not yet been extracted into the EmberScope evidence database."
   }
 ]

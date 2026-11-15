@@ -222,3 +222,16 @@ __marimo__/
 .env
 .env.*
 !.env.example
+
+# Node.js dependencies
+node_modules/
+# Frontend build output
+dist/
+frontend/dist/
+# Vite cache
+.vite/
+# TypeScript build info
+*.tsbuildinfo
+# Operating system files
+.DS_Store
+Thumbs.db

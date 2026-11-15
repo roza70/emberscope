@@ -1,281 +1,473 @@
 ﻿[
-  {
-    "psi_id": "PSI-117",
-    "short_name": "Cool Flame CFD",
-    "name": "Effect of External Thermo-Convective Perturbation on Cool Flame Dynamics: A Multidimensional Multi-Physics CFD Analysis",
-    "category": [
-      "Prevention"
-    ],
-    "project_type": "Ground Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-159",
-    "short_name": "ACME CFI-G",
-    "name": "Advanced Combustion via Microgravity Experiments / Cool Flames Investigation with Gases",
-    "category": [
-      "Prevention"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-10",
-    "short_name": "ACME Flame Design",
-    "name": "Advanced Combustion via Microgravity Experiments / Flame Design",
-    "category": [
-      "Prevention"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-62",
-    "short_name": "BASS Flame Spread Modeling",
-    "name": "Concurrent Flame Spread Modeling using Flamelet Generated Manifolds in Microgravity with Comparison to BASS Experiments using Two-Color Tomography",
-    "category": [
-      "Prevention"
-    ],
-    "project_type": "Ground Investigation",
-    "doi": "10.60555/e9xp-ex83",
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-60",
-    "short_name": "SPICE Data Analysis",
-    "name": "Computational and Experimental Analysis of SPICE Data Sets",
-    "category": [
-      "Prevention",
-      "Detection"
-    ],
-    "project_type": "Ground Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-142",
-    "short_name": "Cool Flame Transitions",
-    "name": "Quantitative Studies of Cool Flame Transitions at Radiation / Stretch Extinction Using Counterflow Flames",
-    "category": [
-      "Prevention",
-      "Suppression"
-    ],
-    "project_type": "Ground Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-101",
-    "short_name": "SAME-R",
-    "name": "Smoke Aerosol Measurement Experiment-Reflight",
-    "category": [
-      "Detection"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": "10.60555/2np7-jv14",
-    "materials": [
-      "Pyrell"
-    ],
-    "instruments": [
-      "DustTrak",
-      "Ionization detector",
-      "M-pass"
-    ],
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-115",
-    "short_name": "SAME Data Modeling",
-    "name": "Utilization of the Smoke Aerosol Measurement Experiment Data for Advanced Modeling and Simulation of Smoke Generation in Micro-Gravity",
-    "category": [
-      "Detection"
-    ],
-    "project_type": "Ground Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-98",
-    "short_name": "SAFFIRE-I",
-    "name": "Spacecraft Fire Safety Experiment-I",
-    "category": [
-      "Prevention"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": "10.60555/0t15-1z43",
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-39",
-    "short_name": "CFI",
-    "name": "Cool Flames Investigation",
-    "category": [
-      "Prevention"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-102",
-    "short_name": "SAME",
-    "name": "Smoke and Aerosol Measurement Experiment",
-    "category": [
-      "Detection"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-106",
-    "short_name": "SLICE",
-    "name": "Structure and Liftoff In Combustion Experiment",
-    "category": [
-      "Prevention"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-99",
-    "short_name": "SAFFIRE-II",
-    "name": "Spacecraft Fire Experiment-II",
-    "category": [
-      "Prevention",
-      "Detection"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-107",
-    "short_name": "SPICE",
-    "name": "Smoke Point In Co-flow Experiment",
-    "category": [
-      "Prevention",
-      "Detection"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-100",
-    "short_name": "SAFFIRE-III",
-    "name": "Spacecraft Fire Experiment-III",
-    "category": [
-      "Prevention",
-      "Detection"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-21",
-    "short_name": "ACME CLD Flame",
-    "name": "Advanced Combustion via Microgravity Experiments / Coflow Laminar Diffusion Flame",
-    "category": [
-      "Prevention"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-25",
-    "short_name": "BASS-II",
-    "name": "Burning and Suppression of Solids II",
-    "category": [
-      "Prevention",
-      "Suppression"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": "10.60555/4qc4-de67",
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-20",
-    "short_name": "ACME BRE",
-    "name": "Advanced Combustion via Microgravity Experiments - Burning Rate Emulator",
-    "category": [
-      "Prevention"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-68",
-    "short_name": "FLEX-2",
-    "name": "Flame Extinguishment Experiment - 2",
-    "category": [
-      "Suppression"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-22",
-    "short_name": "ACME E-FIELD Flames",
-    "name": "Advanced Combustion via Microgravity Experiments Electric-Field Effects on Laminar Diffusion Flames",
-    "category": [
-      "Prevention"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-23",
-    "short_name": "ACME s-Flame",
-    "name": "Advanced Combustion via Microgravity Experiments-Structure and Response of Spherical Diffusion Flames",
-    "category": [
-      "Prevention"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-69",
-    "short_name": "FLEX",
-    "name": "Flame Extinguishment Experiment",
-    "category": [
-      "Suppression"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-26",
-    "short_name": "BASS",
-    "name": "Burning and Suppression of Solids",
-    "category": [
-      "Prevention",
-      "Suppression"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": "10.60555/58h4-dy80",
-    "metadata_only": true
-  },
-  {
-    "psi_id": "PSI-47",
-    "short_name": "DAFT / DAFT-2",
-    "name": "Dust and Aerosol Measurement Feasibility Test / Dust and Aerosol Measurement Feasibility Test-2",
-    "category": [
-      "Detection"
-    ],
-    "project_type": "Microgravity Investigation",
-    "doi": null,
-    "metadata_only": true
-  }
+    {
+        "psi_id":  "PSI-117",
+        "short_name":  "Cool Flame CFD",
+        "name":  "Effect of External Thermo-Convective Perturbation on Cool Flame Dynamics: A Multidimensional Multi-Physics CFD Analysis",
+        "category":  [
+                         "Prevention"
+                     ],
+        "project_type":  "Ground Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Analyze cool-flame dynamics under external thermo-convective perturbations using multidimensional CFD modeling.",
+        "platform":  "Ground-based research",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-117"
+    },
+    {
+        "psi_id":  "PSI-159",
+        "short_name":  "ACME CFI-G",
+        "name":  "Advanced Combustion via Microgravity Experiments / Cool Flames Investigation with Gases",
+        "category":  [
+                         "Prevention"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Investigate cool-flame combustion behavior involving gases in a microgravity environment.",
+        "platform":  "Microgravity research platform",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-159"
+    },
+    {
+        "psi_id":  "PSI-10",
+        "short_name":  "ACME Flame Design",
+        "name":  "Advanced Combustion via Microgravity Experiments / Flame Design",
+        "category":  [
+                         "Prevention"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Study flame design and combustion behavior under microgravity conditions.",
+        "platform":  "Microgravity research platform",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-10"
+    },
+    {
+        "psi_id":  "PSI-62",
+        "short_name":  "BASS Flame Spread Modeling",
+        "name":  "Concurrent Flame Spread Modeling using Flamelet Generated Manifolds in Microgravity with Comparison to BASS Experiments using Two-Color Tomography",
+        "category":  [
+                         "Prevention"
+                     ],
+        "project_type":  "Ground Investigation",
+        "doi":  "10.60555/e9xp-ex83",
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  "NASA Glenn Research Center",
+        "objective":  "Develop and evaluate flamelet-generated manifold modeling techniques for concurrent flame spread, using BASS experiments as benchmarks.",
+        "platform":  "Ground-based modeling",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-62"
+    },
+    {
+        "psi_id":  "PSI-60",
+        "short_name":  "SPICE Data Analysis",
+        "name":  "Computational and Experimental Analysis of SPICE Data Sets",
+        "category":  [
+                         "Prevention",
+                         "Detection"
+                     ],
+        "project_type":  "Ground Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Analyze experimental and computational datasets associated with the SPICE investigation.",
+        "platform":  "Ground-based research",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-60"
+    },
+    {
+        "psi_id":  "PSI-142",
+        "short_name":  "Cool Flame Transitions",
+        "name":  "Quantitative Studies of Cool Flame Transitions at Radiation / Stretch Extinction Using Counterflow Flames",
+        "category":  [
+                         "Prevention",
+                         "Suppression"
+                     ],
+        "project_type":  "Ground Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Study cool-flame transitions and extinction behavior in counterflow flames under varying radiation and stretch conditions.",
+        "platform":  "Ground-based research",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-142"
+    },
+    {
+        "psi_id":  "PSI-101",
+        "short_name":  "SAME-R",
+        "name":  "Smoke Aerosol Measurement Experiment-Reflight",
+        "category":  [
+                         "Detection"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  "10.60555/2np7-jv14",
+        "materials":  [
+                          "Pyrell"
+                      ],
+        "instruments":  [
+                            "DustTrak",
+                            "Ionization detector",
+                            "M-pass"
+                        ],
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  "NASA Glenn Research Center",
+        "objective":  "Quantify smoke particle sizes in low gravity and investigate their relationship with smoke generation and transport.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101"
+    },
+    {
+        "psi_id":  "PSI-115",
+        "short_name":  "SAME Data Modeling",
+        "name":  "Utilization of the Smoke Aerosol Measurement Experiment Data for Advanced Modeling and Simulation of Smoke Generation in Micro-Gravity",
+        "category":  [
+                         "Detection"
+                     ],
+        "project_type":  "Ground Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Use SAME experimental data for advanced modeling and simulation of smoke generation in microgravity.",
+        "platform":  "Ground-based modeling",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-115"
+    },
+    {
+        "psi_id":  "PSI-98",
+        "short_name":  "SAFFIRE-I",
+        "name":  "Spacecraft Fire Safety Experiment-I",
+        "category":  [
+                         "Prevention"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  "10.60555/0t15-1z43",
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  "NASA Glenn Research Center",
+        "objective":  "Investigate large-scale solid-fuel fire behavior and flame growth in a spacecraft environment.",
+        "platform":  "Cygnus cargo spacecraft",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98"
+    },
+    {
+        "psi_id":  "PSI-39",
+        "short_name":  "CFI",
+        "name":  "Cool Flames Investigation",
+        "category":  [
+                         "Prevention"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Investigate cool-flame combustion phenomena under microgravity conditions.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39"
+    },
+    {
+        "psi_id":  "PSI-102",
+        "short_name":  "SAME",
+        "name":  "Smoke and Aerosol Measurement Experiment",
+        "category":  [
+                         "Detection"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  "NASA Glenn Research Center",
+        "objective":  "Measure smoke particle-size distributions in microgravity and investigate their relationship with smoke generation.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102"
+    },
+    {
+        "psi_id":  "PSI-106",
+        "short_name":  "SLICE",
+        "name":  "Structure and Liftoff In Combustion Experiment",
+        "category":  [
+                         "Prevention"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Investigate flame structure and liftoff behavior in microgravity combustion experiments.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-106"
+    },
+    {
+        "psi_id":  "PSI-99",
+        "short_name":  "SAFFIRE-II",
+        "name":  "Spacecraft Fire Experiment-II",
+        "category":  [
+                         "Prevention",
+                         "Detection"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  "NASA Glenn Research Center",
+        "objective":  "Investigate spacecraft fire behavior and smoke characteristics in a large-scale experimental environment.",
+        "platform":  "Cygnus cargo spacecraft",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+    },
+    {
+        "psi_id":  "PSI-107",
+        "short_name":  "SPICE",
+        "name":  "Smoke Point In Co-flow Experiment",
+        "category":  [
+                         "Prevention",
+                         "Detection"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  "10.60555/9kbh-e962",
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  "NASA Glenn Research Center",
+        "objective":  "Study laminar smoke-point properties of non-buoyant jet diffusion flames under different co-flow conditions.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-107"
+    },
+    {
+        "psi_id":  "PSI-100",
+        "short_name":  "SAFFIRE-III",
+        "name":  "Spacecraft Fire Experiment-III",
+        "category":  [
+                         "Prevention",
+                         "Detection"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  "NASA Glenn Research Center",
+        "objective":  "Investigate spacecraft fire behavior and related fire-safety characteristics in microgravity.",
+        "platform":  "Cygnus cargo spacecraft",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+    },
+    {
+        "psi_id":  "PSI-21",
+        "short_name":  "ACME CLD Flame",
+        "name":  "Advanced Combustion via Microgravity Experiments / Coflow Laminar Diffusion Flame",
+        "category":  [
+                         "Prevention"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Study coflow laminar diffusion flame behavior under microgravity conditions.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-21"
+    },
+    {
+        "psi_id":  "PSI-25",
+        "short_name":  "BASS-II",
+        "name":  "Burning and Suppression of Solids II",
+        "category":  [
+                         "Prevention",
+                         "Suppression"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  "10.60555/4qc4-de67",
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  "NASA Glenn Research Center",
+        "objective":  "Investigate solid-fuel ignition, flame growth, spread and extinction in microgravity under controlled oxygen concentration and airflow conditions.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25"
+    },
+    {
+        "psi_id":  "PSI-20",
+        "short_name":  "ACME BRE",
+        "name":  "Advanced Combustion via Microgravity Experiments - Burning Rate Emulator",
+        "category":  [
+                         "Prevention"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Investigate burning-rate behavior using the ACME Burning Rate Emulator experiment.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-20"
+    },
+    {
+        "psi_id":  "PSI-68",
+        "short_name":  "FLEX-2",
+        "name":  "Flame Extinguishment Experiment - 2",
+        "category":  [
+                         "Suppression"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  "NASA Glenn Research Center",
+        "objective":  "Investigate flame extinguishment behavior and combustion processes involving liquid-fuel droplets in microgravity.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-68"
+    },
+    {
+        "psi_id":  "PSI-22",
+        "short_name":  "ACME E-FIELD Flames",
+        "name":  "Advanced Combustion via Microgravity Experiments Electric-Field Effects on Laminar Diffusion Flames",
+        "category":  [
+                         "Prevention"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Investigate the effects of electric fields on laminar diffusion flames in microgravity.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-22"
+    },
+    {
+        "psi_id":  "PSI-23",
+        "short_name":  "ACME s-Flame",
+        "name":  "Advanced Combustion via Microgravity Experiments-Structure and Response of Spherical Diffusion Flames",
+        "category":  [
+                         "Prevention"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Study the structure and response of spherical diffusion flames under microgravity conditions.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-23"
+    },
+    {
+        "psi_id":  "PSI-69",
+        "short_name":  "FLEX",
+        "name":  "Flame Extinguishment Experiment",
+        "category":  [
+                         "Suppression"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  "10.60555/mbq8-0451",
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  "NASA Glenn Research Center",
+        "objective":  "Study liquid-fuel droplet combustion and flame extinction behavior in microgravity, including the effects of gaseous suppressants.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69"
+    },
+    {
+        "psi_id":  "PSI-26",
+        "short_name":  "BASS",
+        "name":  "Burning and Suppression of Solids",
+        "category":  [
+                         "Prevention",
+                         "Suppression"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  "10.60555/58h4-dy80",
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  "NASA Glenn Research Center",
+        "objective":  "Study the burning and extinction of solid materials in microgravity, including the influence of airflow and inert-gas suppression.",
+        "platform":  "International Space Station",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26"
+    },
+    {
+        "psi_id":  "PSI-47",
+        "short_name":  "DAFT / DAFT-2",
+        "name":  "Dust and Aerosol Measurement Feasibility Test / Dust and Aerosol Measurement Feasibility Test-2",
+        "category":  [
+                         "Detection"
+                     ],
+        "project_type":  "Microgravity Investigation",
+        "doi":  null,
+        "metadata_only":  true,
+        "data_status":  "metadata_only",
+        "nasa_center":  null,
+        "objective":  "Investigate the feasibility of measuring dust and aerosol characteristics in a microgravity environment.",
+        "platform":  "Microgravity research platform",
+        "quantitative_data_available":  null,
+        "quantitative_data_ingested_locally":  false,
+        "research_area":  "Combustion Science",
+        "source":  "https://psi.nasa.gov/physci/repo/data/investigations/PSI-47"
+    }
 ]

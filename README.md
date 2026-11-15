@@ -87,26 +87,48 @@ Source: [NASA Physical Sciences Informatics](https://psi.nasa.gov/physci/repo)
 **Data & Research**
 - NASA Physical Sciences Informatics (PSI)
 
-## 📁 Project Structure
+
+## Project Structure
 
 ```text
 emberscope/
 │
 ├── backend/
 │   ├── main.py
+│   ├── gemini_provider.py
 │   └── requirements.txt
 │
+├── data/
+│   ├── metadata/
+│   │   └── investigations.json
+│   └── processed/
+│       └── evidence.json
+│
+
 ├── frontend/
-│   ├── src/
+│   ├── index.html
 │   ├── package.json
-│   └── vite.config.ts
+│   ├── package-lock.json
+│   ├── vite.config.ts
+│   └── src/
+│       ├── assets/
+│       ├── AnalyticsDashboard.tsx
+│       ├── EvidenceExplorer.tsx
+│       ├── App.tsx
+│       ├── App.css
+│       ├── index.css
+│       └── main.tsx
+
 │
 ├── si-engine/
 │   └── retrieval/
 │       └── search.py
 │
-└── README.md
+├── research/
+├── README.md
+└── .gitignore
 ```
+
 
 ## ⚙️ Local Installation
 

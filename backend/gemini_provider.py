@@ -1,3 +1,4 @@
+
 import os
 import time
 from pathlib import Path
@@ -7,19 +8,26 @@ from google import genai
 from google.genai import errors, types
 
 
-# Load environment variables
 ENV_FILE = Path(__file__).resolve().parent / ".env"
 load_dotenv(ENV_FILE)
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
+
+PRIMARY_MODEL = os.getenv(
+    "GEMINI_MODEL",
+    "gemini-3.1-flash-lite"
+)
+
+BACKUP_MODEL = os.getenv(
+    "GEMINI_FALLBACK_MODEL",
+    "gemini-3.5-flash-lite"
+)
 
 MAX_ATTEMPTS = 2
 RETRYABLE_STATUS_CODES = {500, 502, 503, 504}
 
 
 def generate_text(prompt: str) -> str:
-    """Generate Gemini response with bounded retries and timeout."""
 
     if not GEMINI_API_KEY:
         raise RuntimeError("Gemini API key is not configured.")
@@ -27,45 +35,58 @@ def generate_text(prompt: str) -> str:
     client = genai.Client(
         api_key=GEMINI_API_KEY,
         http_options=types.HttpOptions(
-            timeout=12000,
-            retry_options=types.HttpRetryOptions(
-                attempts=1
-            )
+            timeout=30000,
+            retry_options=types.HttpRetryOptions(attempts=1)
         )
     )
 
-    try:
-        for attempt in range(MAX_ATTEMPTS):
-            try:
-                response = client.models.generate_content(
-                    model=GEMINI_MODEL,
-                    contents=prompt
-                )
+    models = list(dict.fromkeys([
+        PRIMARY_MODEL,
+        BACKUP_MODEL
+    ]))
 
-                if not response.text:
-                    raise RuntimeError(
-                        "Gemini returned an empty response."
+    try:
+        for model in models:
+
+            for attempt in range(MAX_ATTEMPTS):
+
+                try:
+                    print(f"Trying Gemini model: {model}")
+
+                    response = client.models.generate_content(
+                        model=model,
+                        contents=prompt
                     )
 
-                return response.text
+                    if not response.text:
+                        raise RuntimeError(
+                            "Gemini returned an empty response."
+                        )
 
-            except errors.ServerError as exc:
-                if (
-                    exc.code not in RETRYABLE_STATUS_CODES
-                    or attempt == MAX_ATTEMPTS - 1
-                ):
-                    raise RuntimeError(
-                        f"Gemini unavailable (HTTP {exc.code})."
-                    ) from exc
+                    print(f"Gemini successful: {model}")
 
-                print(
-                    f"Gemini error {exc.code}. "
-                    "One retry in 1 second..."
-                )
+                    return response.text
 
-                time.sleep(1)
+                except errors.ServerError as exc:
+
+                    if exc.code not in RETRYABLE_STATUS_CODES:
+                        raise
+
+                    print(
+                        f"Gemini error {exc.code} on {model}. "
+                        f"Attempt {attempt + 1}/{MAX_ATTEMPTS}"
+                    )
+
+                    if attempt < MAX_ATTEMPTS - 1:
+                        time.sleep(2)
+                    else:
+                        print(
+                            f"Switching to next model after {model}."
+                        )
+
+        raise RuntimeError(
+            "All configured Gemini models are unavailable."
+        )
 
     finally:
         client.close()
-
-    raise RuntimeError("Gemini could not generate a response.")

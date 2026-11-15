@@ -280,7 +280,14 @@ function AnalyticsDashboard({ investigations, evidence }: Props) {
                   stroke="#ffffff15"
                 />
 
-                <XAxis dataKey="category" stroke="#aaa" />
+                <XAxis
+                  dataKey="category"
+                  stroke="#aaa"
+                  interval={0}
+                  tick={{ fill: "#cbd5e1", fontSize: 12 }}
+                  tickMargin={10}
+                  height={45}
+                />
                 <YAxis allowDecimals={false} stroke="#aaa" />
                 <Tooltip />
 

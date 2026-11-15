@@ -1,7 +1,6 @@
-
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import EvidenceExplorer from './EvidenceExplorer'
 import AnalyticsDashboard from './AnalyticsDashboard'
 import './App.css'
@@ -139,6 +138,10 @@ function App() {
 
   const [selectedInvestigation, setSelectedInvestigation] =
     useState<Investigation | null>(null)
+
+  // References for smooth investigation navigation.
+  const investigationSectionRef = useRef<HTMLElement | null>(null)
+  const detailViewRef = useRef<HTMLDivElement | null>(null)
 
   const [question, setQuestion] = useState('')
   const [askResult, setAskResult] = useState<AskResponse | null>(null)
@@ -302,7 +305,28 @@ function App() {
 
   function closeInvestigation() {
     setSelectedInvestigation(null)
+
+    window.setTimeout(() => {
+      investigationSectionRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }, 100)
   }
+
+  // Smoothly bring the selected investigation detail into view.
+  useEffect(() => {
+    if (!selectedInvestigation) return
+
+    const timer = window.setTimeout(() => {
+      detailViewRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }, 100)
+
+    return () => window.clearTimeout(timer)
+  }, [selectedInvestigation])
 
   return (
     <main className="emberscope-app" id="home">
@@ -366,7 +390,6 @@ function App() {
           </div>
         </div>
       </section>
-
       {/* Main Dashboard */}
       <div className="dashboard-container">
 
@@ -548,6 +571,7 @@ function App() {
         {/* Investigation Explorer */}
         {!loading && !error && (
           <section
+            ref={investigationSectionRef}
             className="dashboard-section"
             id="investigations"
           >
@@ -644,7 +668,7 @@ function App() {
               </>
             ) : (
               /* Complete Investigation Detail Page */
-              <div className="detail-view">
+              <div className="detail-view" ref={detailViewRef}>
 
                 <button
                   className="back-button"
@@ -910,9 +934,7 @@ function App() {
                     LOCAL EVIDENCE DATABASE
                   </span>
 
-                  <h3>Related Research Evidence</h3>
-
-                  {relatedEvidence.length > 0 ? (
+                  <h3>Related Research Evidence</h3>                  {relatedEvidence.length > 0 ? (
                     relatedEvidence.map((item) => (
                       <article
                         className="evidence-card"

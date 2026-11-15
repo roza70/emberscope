@@ -1,4 +1,18 @@
-# ✦ EmberScope
+
+
+# EmberScope 🔥
+
+**An SI-Powered NASA Microgravity Fire Safety Intelligence Platform**
+
+## 🚀 Live Links
+
+- **Live Dashboard:** https://emberscope-starfall-dashboard.vercel.app/
+- **Backend API Documentation:** https://emberscope-api.onrender.com/docs
+
+## 👥 Team Starfall
+
+- **Team Member:** Tahsin Roza
+- **Team Member:** Polok Ahmed
 
 ### NASA Microgravity Fire Safety Intelligence Platform
 

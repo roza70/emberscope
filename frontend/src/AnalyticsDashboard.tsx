@@ -163,36 +163,7 @@ function AnalyticsDashboard({ investigations, evidence }: Props) {
     }
   }
 
-  // 6. Moon vs Mars conceptual comparison
-  const planetaryComparison = [
-    {
-      topic: 'External environment',
-      moon: 'Near-vacuum environment with virtually no atmosphere.',
-      mars: 'Very thin, carbon-dioxide-dominated atmosphere.',
-    },
-    {
-      topic: 'Gravity',
-      moon: 'Approximately 1/6 of Earth gravity.',
-      mars: 'Approximately 0.38 of Earth gravity.',
-    },
-    {
-      topic: 'Outside habitat',
-      moon: 'The external environment cannot support ordinary open combustion without an oxidizer supply.',
-      mars: 'The thin, CO2-rich external atmosphere is very different from Earth’s atmosphere.',
-    },
-    {
-      topic: 'Habitat fire safety',
-      moon: 'Pressurized habitat atmosphere, oxygen supply, airflow and combustible materials are important design considerations.',
-      mars: 'Pressurized habitat atmosphere, oxygen supply, airflow and combustible materials are important design considerations.',
-    },
-    {
-      topic: 'Research challenge',
-      moon: 'ISS microgravity experiments do not reproduce lunar gravity or the lunar surface environment.',
-      mars: 'ISS microgravity experiments do not reproduce Martian gravity or its external atmospheric conditions.',
-    },
-  ]
-
-  // 7. Evidence Ranking & Comparison
+  // 6. Evidence Ranking & Comparison
   const evidenceRankingData = investigations
     .map((investigation) => {
       const linkedEvidence = evidence.filter(
